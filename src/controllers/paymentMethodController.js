@@ -82,9 +82,24 @@ const updatePaymentMethodByIdController = async (req, res) => {
   }
 };
 
+const deletePaymentMethodByIdController = async (req, res) => {
+  const { id } = req.params;
+
+  const paymentMethod = await getPaymentMethodByIdModel(id);
+
+  const [rows, fields] = paymentMethod;
+
+  if (!rows || !rows.length) return res.sendWrapped('Not found', {}, httpStatus.NOT_FOUND);
+
+  await deletPaymentMethodByIdModel(id);
+
+  res.sendWrapped(`Payment method with ID ${id} deleted`, {}, httpStatus.OK);
+};
+
 module.exports = {
   createPaymentMethodController,
   getAllPaymentMethodController,
   getPaymentMethodByIdController,
-  updatePaymentMethodByIdController
+  updatePaymentMethodByIdController,
+  deletePaymentMethodByIdController,
 };
