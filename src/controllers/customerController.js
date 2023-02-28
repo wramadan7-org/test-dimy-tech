@@ -1,5 +1,5 @@
 const httpStatus = require('http-status');
-const { createCustomerModel, getAllCustomerModel, getCustomerByIdModel } = require('../models/CustomerModel');
+const { createCustomerModel, getAllCustomerModel, getCustomerByIdModel, updateCustomerByIdModel } = require('../models/CustomerModel');
 
 const createCustomerController = async (req, res) => {
   try {
@@ -49,8 +49,35 @@ const getCustomerByIdController = async (req, res) => {
   }
 };
 
+const updateCustomerByIdController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const requestBody = req.body;
+
+    const customer = await getCustomerByIdModel(id);
+
+    const [rows, fields] = customer;
+
+    if (!rows || !rows.length) return res.sendWrapped('Not found', {}, httpStatus.NOT_FOUND);
+
+    const data = {
+      ...rows[0],
+      ...requestBody,
+    };
+
+    const update = await updateCustomerByIdModel(id, data);
+
+    if (!update || !update.length || !update[0].affectedRows) return res.sendWrapped('Fail to update customer');
+
+    res.sendWrapped('Update customer successfully', data, httpStatus.OK);
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   createCustomerController,
   getAllCustomerController,
   getCustomerByIdController,
+  updateCustomerByIdController,
 };
