@@ -1,5 +1,5 @@
 const httpStatus = require('http-status');
-const { createCustomerModel } = require('../models/CustomerModel');
+const { createCustomerModel, getAllCustomerModel } = require('../models/CustomerModel');
 
 const createCustomerController = async (req, res) => {
   try {
@@ -22,6 +22,19 @@ const createCustomerController = async (req, res) => {
   }
 };
 
+const getAllCustomerController = async (req, res) => {
+  try {
+    const customers = await getAllCustomerModel();
+
+    const [rows, fields] = customers;
+
+    res.sendWrapped('List of customer', rows, httpStatus.OK);
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   createCustomerController,
+  getAllCustomerController,
 };
