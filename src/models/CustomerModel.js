@@ -32,8 +32,21 @@ const getCustomerByIdModel = async (id) => {
   return customerl
 };
 
+/**
+ * Model update customer by ID
+ * @param {Number} id 
+ * @param {Object} param1 
+ * @returns Array
+ */
+const updateCustomerByIdModel = async (id, {customer_name}) => {
+  const customer = await (await db).execute('UPDATE customer SET customer_name = ? WHERE id = ?', [customer_name, id]);
+
+  return customer;
+};
+
 module.exports = {
   createCustomerModel,
   getAllCustomerModel,
   getCustomerByIdModel,
+  updateCustomerByIdModel,
 };
