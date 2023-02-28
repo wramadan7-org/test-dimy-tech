@@ -47,7 +47,7 @@ const getProductByIdController = async (req, res) => {
 
     const [rows, field] = product;
 
-    if (!rows) return res.sendWrapped('Not found', {}, httpStatus.NOT_FOUND);
+    if (!rows || !rows.length) return res.sendWrapped('Not found', {}, httpStatus.NOT_FOUND);
 
     res.sendWrapped(`Product with ID ${id}`, rows[0], httpStatus.OK);
   } catch (error) {
@@ -64,8 +64,8 @@ const updateProductByIdController = async (req, res) => {
 
     const [rows, fields] = product;
 
-    if (!rows) return res.sendWrapped('Not found', {}, httpStatus.NOT_FOUND);
-
+    if (!rows || !rows.length) return res.sendWrapped('Not found', {}, httpStatus.NOT_FOUND);
+    
     const data = {
       ...rows[0],
       ...requestBody,
@@ -87,7 +87,7 @@ const deleteProductByIdController = async (req, res) => {
 
     const [rows, fields] = product;
 
-    if (!rows) return res.sendWrapped('Not found', {}, httpStatus.NOT_FOUND);
+    if (!rows || !rows.length) return res.sendWrapped('Not found', {}, httpStatus.NOT_FOUND);
 
     await deleteProductByIdModel(id);
 
