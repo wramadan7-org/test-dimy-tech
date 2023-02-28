@@ -3,6 +3,7 @@ const {
   createProductModel,
   getAllProductModel,
   getProductByIdModel,
+  updateProductByIdModel,
 } = require('../models/ProductModel');
 
 const craeteProductController = async (req, res) => {
@@ -53,8 +54,33 @@ const getProductByIdController = async (req, res) => {
   }
 };
 
+const updateProductByIdController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const requestBody = req.body;
+
+    const product = await getProductByIdModel(id);
+
+    const [rows, fields] = product;
+
+    if (!rows) return res.sendWrapped('Not found', {}, httpStatus.NOT_FOUND);
+
+    const data = {
+      ...rows[0],
+      ...requestBody,
+    };
+
+    const update = await updateProductByIdModel(id, data);
+
+    res.sendWrapped('Update product successfully', update, httpStatus.OK);
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   craeteProductController,
   getAllProductController,
   getProductByIdController,
+  updateProductByIdController,
 };

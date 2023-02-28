@@ -22,18 +22,39 @@ const createProductModel = async ({name, price}) => {
 const getAllProductModel = async () => (await db).execute('SELECT * FROM product');
 
 /**
- * 
+ * Model get product by ID
  * @param {Number} id 
- * @returns Object
+ * @returns Array
  */
 const getProductByIdModel = async (id) => {
-  const result = await (await db).execute('SELECT * from product WHERE id = ?', [id]);
+  try {
+    const result = await (await db).execute('SELECT * from product WHERE id = ?', [id]);
 
-  return result;
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
+ * Model update product by ID
+ * @param {Number} id 
+ * @param {Object} param1 
+ * @returns Array
+ */
+const updateProductByIdModel = async (id, {name, price}) => {
+  try {
+    const product = await (await db).execute(`UPDATE product SET name = ?, price = ? WHERE id = ?`, [name, price, id]);
+
+    return product;
+  } catch (error) {
+    throw error;
+  }
 };
 
 module.exports = {
   createProductModel,
   getAllProductModel,
   getProductByIdModel,
+  updateProductByIdModel,
 };
