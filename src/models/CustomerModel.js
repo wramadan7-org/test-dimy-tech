@@ -21,7 +21,19 @@ const createCustomerModel = async ({customer_name}) => {
  */
 const getAllCustomerModel = async () => (await db).execute('SELECT * FROM customer');
 
+/**
+ * Model get customer by ID
+ * @param {Number} id 
+ * @returns Array
+ */
+const getCustomerByIdModel = async (id) => {
+  const customer = await (await db).execute('SELECT * FROM customer WHERE id = ?', [id]);
+
+  return customerl
+};
+
 module.exports = {
   createCustomerModel,
   getAllCustomerModel,
+  getCustomerByIdModel,
 };
