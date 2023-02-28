@@ -73,7 +73,9 @@ const updateProductByIdController = async (req, res) => {
 
     const update = await updateProductByIdModel(id, data);
 
-    res.sendWrapped('Update product successfully', update, httpStatus.OK);
+    if (!update || !update[0].affectedRows) return res.sendWrapped('Fail to update product', {}, httpStatus.CONFLICT);
+
+    res.sendWrapped('Update product successfully', data, httpStatus.OK);
   } catch (error) {
     throw error;
   }
