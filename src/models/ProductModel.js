@@ -52,9 +52,25 @@ const updateProductByIdModel = async (id, {name, price}) => {
   }
 };
 
+/**
+ * Model delete product by ID
+ * @param {Number} id 
+ * @returns Array
+ */
+const deleteProductByIdModel = async (id) => {
+  try {
+    const product = await (await db).execute('DELETE FROM product WHERE id = ?', [id]);
+
+    return product;
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   createProductModel,
   getAllProductModel,
   getProductByIdModel,
   updateProductByIdModel,
+  deleteProductByIdModel,
 };

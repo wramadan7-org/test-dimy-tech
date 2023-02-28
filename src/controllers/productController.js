@@ -4,6 +4,7 @@ const {
   getAllProductModel,
   getProductByIdModel,
   updateProductByIdModel,
+  deleteProductByIdModel,
 } = require('../models/ProductModel');
 
 const craeteProductController = async (req, res) => {
@@ -78,9 +79,28 @@ const updateProductByIdController = async (req, res) => {
   }
 };
 
+const deleteProductByIdController = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const product = await getProductByIdModel(id);
+
+    const [rows, fields] = product;
+
+    if (!rows) return res.sendWrapped('Not found', {}, httpStatus.NOT_FOUND);
+
+    await deleteProductByIdModel(id);
+
+    res.sendWrapped(`Product with ID ${id} deleted`, {}, httpStatus.OK);
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   craeteProductController,
   getAllProductController,
   getProductByIdController,
   updateProductByIdController,
+  deleteProductByIdController,
 };
