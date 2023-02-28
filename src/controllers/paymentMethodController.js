@@ -56,8 +56,35 @@ const getPaymentMethodByIdController = async (req, res) => {
   }
 };
 
+const updatePaymentMethodByIdController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const requestBody = req.body;
+
+    const paymentMethod = await getPaymentMethodByIdModel(id);
+
+    const [rows, fields] = paymentMethod;
+
+    if (!rows || !rows.length) return res.sendWrapped('Not found', {}, httpStatus.NOT_FOUND);
+
+    const data = {
+      ...rows[0],
+      ...requestBody,
+    };
+
+    const update = await updatePaymentMethodByIdModel(id, data);
+
+    if (!update || !update.length || !update[0].affectedRows) return res.sendWrapped('Fail to update payment method', {}, httpStatus.CONFLICT);
+
+    res.sendWrapped('Update payment method successfully', data, httpStatus.OK);
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   createPaymentMethodController,
   getAllPaymentMethodController,
-  getPaymentMethodByIdController
+  getPaymentMethodByIdController,
+  updatePaymentMethodByIdController
 };
