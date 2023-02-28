@@ -15,6 +15,13 @@ const createCustomerModel = async ({customer_name}) => {
   }
 };
 
+/**
+ * Model get all customer
+ * @returns Array
+ */
+const getAllCustomerModel = async () => (await db).execute('SELECT * FROM customer');
+
 module.exports = {
   createCustomerModel,
+  getAllCustomerModel,
 };
