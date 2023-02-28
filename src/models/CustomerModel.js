@@ -27,9 +27,13 @@ const getAllCustomerModel = async () => (await db).execute('SELECT * FROM custom
  * @returns Array
  */
 const getCustomerByIdModel = async (id) => {
-  const customer = await (await db).execute('SELECT * FROM customer WHERE id = ?', [id]);
-
-  return customerl
+  try {
+    const customer = await (await db).execute('SELECT * FROM customer WHERE id = ?', [id]);
+  
+    return customer;
+  } catch (error) {
+    throw error;
+  }
 };
 
 /**
@@ -39,9 +43,13 @@ const getCustomerByIdModel = async (id) => {
  * @returns Array
  */
 const updateCustomerByIdModel = async (id, {customer_name}) => {
-  const customer = await (await db).execute('UPDATE customer SET customer_name = ? WHERE id = ?', [customer_name, id]);
-
-  return customer;
+  try {
+    const customer = await (await db).execute('UPDATE customer SET customer_name = ? WHERE id = ?', [customer_name, id]);
+  
+    return customer;
+  } catch (error) {
+    throw error;
+  }
 };
 
 /**
@@ -50,9 +58,13 @@ const updateCustomerByIdModel = async (id, {customer_name}) => {
  * @returns Array
  */
 const deleteCustomerByIdModel = async (id) => {
-  const customer = await (await db).execute('DELETE FROM customer WHERE id = ?', [id]);
-
-  return customer;
+  try {
+    const customer = await (await db).execute('DELETE FROM customer WHERE id = ?', [id]);
+  
+    return customer;
+  } catch (error) {
+    throw error;
+  }
 };
 
 module.exports = {
