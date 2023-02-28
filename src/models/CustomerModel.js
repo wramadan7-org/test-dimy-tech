@@ -44,9 +44,21 @@ const updateCustomerByIdModel = async (id, {customer_name}) => {
   return customer;
 };
 
+/**
+ * Model delete customer by ID
+ * @param {Number} id 
+ * @returns Array
+ */
+const deleteCustomerByIdModel = async (id) => {
+  const customer = await (await db).execute('DELETE FROM customer WHERE id = ?', [id]);
+
+  return customer;
+};
+
 module.exports = {
   createCustomerModel,
   getAllCustomerModel,
   getCustomerByIdModel,
   updateCustomerByIdModel,
+  deleteCustomerByIdModel
 };
