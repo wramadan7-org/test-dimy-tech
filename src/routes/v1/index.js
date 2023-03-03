@@ -3,6 +3,7 @@ const productRoute = require('./productRoute');
 const paymentMethodRoute = require('./paymentMethodRoute');
 const customerRoute = require('./customerRoute');
 const customerAddressRoute = require('./customerAddressRoute');
+const orderRoute = require('./orderRoute');
 
 const router = Router();
 
@@ -22,6 +23,10 @@ const defaultRoute = [
   {
     path: '/customeraddress',
     route: customerAddressRoute,
+  },
+  {
+    path: '/order',
+    route: orderRoute,
   },
 ];
 
