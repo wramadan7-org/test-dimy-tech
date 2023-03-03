@@ -95,9 +95,9 @@ const updateCustomerAddressByIdController = async (req, res) => {
   
     const isCustomerAddressValid = await getCustomerAddressByIdModel(id);
   
-    const [rowsCustomer_address, fieldsCustomerAddress] = isCustomerAddressValid;
+    const [rowsCustomerAddress, fieldsCustomerAddress] = isCustomerAddressValid;
   
-    if (!rowsCustomer_address || !rowsCustomer_address.length) return res.sendWrapped('Not found', {}, httpStatus.NOT_FOUND);
+    if (!rowsCustomerAddress || !rowsCustomerAddress.length) return res.sendWrapped('Not found', {}, httpStatus.NOT_FOUND);
   
     const isCustomerValid = await getCustomerByIdModel(requestBody.customer_id);
   
@@ -106,9 +106,9 @@ const updateCustomerAddressByIdController = async (req, res) => {
     if (!rowsCustomer || !rowsCustomer.length) return res.sendWrapped('Not found', {}, httpStatus.NOT_FOUND);
   
     const dataUpdate = {
-      id: rowsCustomer_address[0].id,
-      customer_id: rowsCustomer_address[0].customer_id,
-      address: rowsCustomer_address[0].address,
+      id: rowsCustomerAddress[0].id,
+      customer_id: rowsCustomerAddress[0].customer_id,
+      address: rowsCustomerAddress[0].address,
       ...requestBody,
     }
   
