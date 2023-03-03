@@ -2,6 +2,7 @@ const { Router } = require('express');
 const productRoute = require('./productRoute');
 const paymentMethodRoute = require('./paymentMethodRoute');
 const customerRoute = require('./customerRoute');
+const customerAddressRoute = require('./customerAddressRoute');
 
 const router = Router();
 
@@ -17,6 +18,10 @@ const defaultRoute = [
   {
     path: '/customer',
     route: customerRoute,
+  },
+  {
+    path: '/customeraddress',
+    route: customerAddressRoute,
   },
 ];
 
