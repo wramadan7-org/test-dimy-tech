@@ -1,7 +1,7 @@
 const httpStatus = require('http-status');
 const { randomString } = require('../helpers/randomString');
 const { getCustomerAddressByIdModel } = require('../models/CustomerAddressModel');
-const { createOrderModel } = require('../models/OrderModel');
+const { createOrderModel, getAllOrderModel } = require('../models/OrderModel');
 const { getPaymentMethodByIdModel } = require('../models/PaymentMethodModel');
 const { getProductByIdModel } = require('../models/ProductModel');
 
@@ -57,6 +57,15 @@ const createOrderController = async (req, res) => {
   }
 };
 
+const getAllOrderController = async (req, res) => {
+  const orders = await getAllOrderModel();
+
+  const [rowsOrder, fieldsOrder] = orders;
+
+  res.sendWrapped('List of order', rowsOrder, httpStatus.OK);
+};
+
 module.exports = {
   createOrderController,
+  getAllOrderController,
 };
